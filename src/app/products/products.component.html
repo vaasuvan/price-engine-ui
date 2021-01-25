@@ -1,0 +1,55 @@
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">PRODUCT DETAILS FOR FIRST 50 UNITS</h1>
+  </div>
+  <form  #cartForm="ngForm" >
+    <select class="custom-select" id="colors" [(ngModel)]="productModel.id" name="id" (change)="calculateFiftyPrice(productModel)">
+      <option value="">--Select A Product Here--</option>
+      <option *ngFor="let product of products" value={{product.id}}> {{product.productName}}</option>
+    </select>
+  </form>
+
+</section>
+
+<div class="container mb-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Product Name</th>
+            <th scope="col"> Unit Quantity</th>
+            <th scope="col" class="text-right">Actual Price</th>
+            <th scope="col" class="text-right">Price of Total units</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let product of productsWithPrice">
+          <tr>
+            <td><img src="assets/images/penguins-ear.jpeg" class="product_logo"/></td>
+            <td>{{product.productName}}</td>
+            <td>{{product.quantity}}</td>
+            <td class="text-right">{{product.cartonPrice | currency: 'LKR  ':true}}</td>
+            <td class="text-right">{{product.ultimatePrice | currency: 'LKR  ':true}}</td>
+            <!--<td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>-->
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col mb-2">
+      <div class="row">
+        <div class="col-sm-12  col-md-6">
+          <button class="btn btn-block btn-info" routerLink="cart">Continue Shopping</button>
+        </div>
+        <div class="col-sm-12 col-md-6 text-right">
+          <!--<button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

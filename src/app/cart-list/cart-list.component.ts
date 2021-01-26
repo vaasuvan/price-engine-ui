@@ -10,7 +10,7 @@ import {Price} from '../model/price-model';
 })
 export class CartListComponent implements OnInit {
 
-  cartProducts: any[] = [];
+  productCart: Array<Product> = [];
   productModel = new Product('', '', '', '', '');
   Price; price = new Price('', '', '', '', '', '');
   constructor(private productService: ProductService) { }
@@ -20,20 +20,20 @@ export class CartListComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getCartProduct();
-  }
-
-  // tslint:disable-next-line:typedef
-  getCartProduct(){
-    this.productService.getAllProducts().subscribe((data: any[]) => {
-      console.log(data);
-      this.cartProducts = data;
+    this.productService.productCart.forEach(element => {
+      console.log('Checking data injection between different component ' + element.productName);
     });
   }
 
   // tslint:disable-next-line:typedef
+  getCartProduct(){
+      this.productCart = this.productService.productCart;
+  }
+
+  // tslint:disable-next-line:typedef
   calculatePrice(productModel) {
-    console.log('==========' + this.productModel.id);
-    console.log('==========' + this.productModel.quantity);
+    console.log('==========' + productModel.id);
+    console.log('==========' + productModel.quantity);
     if (this.productModel.id !== '' && this.productModel.quantity !== '') {
       this.productService.calculatePrice(this.productModel.id, this.productModel.quantity).subscribe((data: Price) => {
         console.log(data);

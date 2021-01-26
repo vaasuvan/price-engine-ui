@@ -21,11 +21,11 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let product of cartProducts">
+          <tr *ngFor="let product of productCart">
             <td><img src="assets/images/{{product.productName}}.jpeg" class="img-responsive img-fluid" alt="" width="90px"/> </td>
             <td>{{product.productName}}</td>
             <td>In stock</td>
-            <input type="text" [(ngModel)]="productModel.id" value={{product.id}}} name="id" hidden>
+            <input type="text" [(ngModel)]="productModel.id" value="productModel.id" name="id" hidden>
 <!--            <td><input class="form-control" type="text" [(ngModel)]="productModel.quantity" required /></td>-->
             <td><input type="number" class="form-control"  id="quantity" name="quantity" [(ngModel)]="productModel.quantity" required></td>
             <td class="text-right">{{ price.ultimatePrice | currency: 'LKR  ':true }}</td>

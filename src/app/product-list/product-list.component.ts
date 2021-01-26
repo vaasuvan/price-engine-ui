@@ -19,7 +19,7 @@ export class ProductListComponent implements OnInit {
 
   constructor(private productService: ProductService) {}
 
-  // @ts-ignore
+  /*// @ts-ignore
   get data(): Product[]{
     return this.productService.productCart;
   }
@@ -27,7 +27,7 @@ export class ProductListComponent implements OnInit {
   // @ts-ignore
   set data(value: Product){
     this.productService.productCart.push(value);
-  }
+  }*/
 
     // tslint:disable-next-line:typedef
   ngOnInit() {
@@ -54,7 +54,7 @@ export class ProductListComponent implements OnInit {
   addToCart(product: Product) {
     console.log('adding product to cart');
     // @ts-ignore
-    set(product);
+    this.productService.productCart.push(product);
   }
 
 }

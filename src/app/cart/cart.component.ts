@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductService} from '../services/product.service';
 import {Product} from '../model/product-model';
-import {Observable} from "rxjs";
+import {Price} from '../model/price-model';
 
 @Component({
   selector: 'app-cart',
@@ -13,7 +13,7 @@ export class CartComponent implements OnInit {
   // tslint:disable-next-line:ban-types
   products: any[] = [];
   calculatedPrice: string;
-  calPrice = {};
+  Price; price = new Price('', '', '', '', '', '');
   pro = {};
   productModel = new Product('', '', '', '', '');
   carts;
@@ -59,10 +59,10 @@ export class CartComponent implements OnInit {
     console.log('==========' + this.productModel.id);
     console.log('==========' + this.productModel.quantity);
     if (this.productModel.id !== '' && this.productModel.quantity !== '') {
-      this.productService.calculatePrice(this.productModel.id, this.productModel.quantity).subscribe((data: any[]) => {
+      this.productService.calculatePrice(this.productModel.id, this.productModel.quantity).subscribe((data: Price) => {
         console.log(data);
-        this.calPrice = data;
-        console.log(this.calPrice);
+        this.price = data;
+        console.log(this.price);
       });
     }
   }

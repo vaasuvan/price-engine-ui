@@ -28,7 +28,7 @@
           </thead>
           <tbody *ngFor="let product of productsWithPrice">
           <tr>
-            <td><img src="assets/images/penguins-ear.jpeg" class="product_logo"/></td>
+            <td><img src="assets/images/{{product.productName}}.jpeg" class="product_logo"/></td>
             <td>{{product.productName}}</td>
             <td>{{product.quantity}}</td>
             <td class="text-right">{{product.cartonPrice | currency: 'LKR  ':true}}</td>
@@ -42,7 +42,7 @@
     <div class="col mb-2">
       <div class="row">
         <div class="col-sm-12  col-md-6">
-          <button class="btn btn-block btn-info" routerLink="cart">Continue Shopping</button>
+          <button class="btn btn-block btn-info" routerLink="product">Continue Shopping</button>
         </div>
         <div class="col-sm-12 col-md-6 text-right">
           <!--<button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>-->

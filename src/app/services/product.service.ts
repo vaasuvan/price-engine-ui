@@ -10,13 +10,10 @@ import {ToasterService} from './toaster.service';
 export class ProductService {
 
   productCart: Array<Product> = [];
-
-  set cartItemsToProduct(product: Product){
-    this.productCart.push(product);
-  }
-  constructor(private http: HttpClient, private toastrService: ToasterService) {}
+  constructor(private http: HttpClient) {}
   // tslint:disable-next-line:typedef
   getAllProducts() {
+    console.log('service call for all records')
     return this.http.get(`${environment.baseURL}/products`);
   }
 
@@ -34,53 +31,42 @@ export class ProductService {
   }
 
   // tslint:disable-next-line:typedef
-  calculateFiftyPrice(productId: string) {
+  calculateFiftyPrice(productId: number) {
     console.log('========calculating 50 products prices=============' + productId);
     return this.http.get(`${environment.baseURL}/price` + '/' + productId);
   }
 
   // tslint:disable-next-line:typedef
-  calculatePrice(productId: string, quantity: string) {
+  calculatePrice(productId: number, quantity: number) {
     console.log('========calculating each products price=============' + productId);
     return this.http.get(`${environment.baseURL}/price` + '/' + productId + '/' + quantity);
   }
 
   // tslint:disable-next-line:typedef
-  addToCart(data: Product) {
-    // localStorage.setItem('active_item', JSON.stringify(data));
-    // const a: Product[] = JSON.parse(localStorage.getItem('active_item')) || [];
-    console.log('localstorage data...' + data);
-    this.productCart.push(data);
-    console.log('cart products' + data);
-    // this.toastrService.wait(
-    //   'Adding Product to Cart',
-    //   'Product Adding to the cart'
-    // );
-    // setTimeout(() => {
-    //   localStorage.setItem('active_item', JSON.stringify(a));
-    // }, 500);
+  addToCart(product: Product) {
+    if (this.productCart.length === 0){
+      this.productCart.push(product);
+    }else {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.productCart.length; i++) {
+        if (this.productCart[i].id !== product.id) {
+          this.productCart.push(product);
+          break;
+        }
+      }
+    }
+    console.log('localstorage data...' + product);
     // return this.http.post(`${environment.baseURL}/cart`, payload);
   }
   // Removing cart from local
   // tslint:disable-next-line:typedef
   removeLocalCartProduct(product: Product) {
-    const products: Product[] = JSON.parse(localStorage.getItem('active_item'));
-
-    for (let i = 0; i < products.length; i++) {
-      if (products[i].id === product.id) {
-        products.splice(i, 1);
+    // const products: Product[] = JSON.parse(localStorage.getItem('active_item'));
+    for (let i = 0; i < this.productCart.length; i++) {
+      if (this.productCart[i].id === product.id) {
+        this.productCart.splice(i, 1);
         break;
       }
     }
-    // ReAdding the products after remove
-    localStorage.setItem('active_item', JSON.stringify(products));
   }
-
-  // // Fetching Locat CartsProducts
-  // getLocalCartProducts(): Product[] {
-  //   const products: Product[] =
-  //     JSON.parse(localStorage.getItem('active_item')) || [];
-  //   console.log('get local cat items' + products);
-  //   return products;
-  // }
 }

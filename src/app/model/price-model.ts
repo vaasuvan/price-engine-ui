@@ -1,9 +1,9 @@
 export class Price {
-  constructor(public id: string,
+  constructor(public id: number,
               public productName: string,
-              public numberOfUnitInCarton: string,
-              public cartonPrice: string,
-              public ultimatePrice: string,
-              public quantity: string
+              public numberOfUnitInCarton: number,
+              public cartonPrice: number,
+              public ultimatePrice: number,
+              public quantity: number
   ) {}
 }

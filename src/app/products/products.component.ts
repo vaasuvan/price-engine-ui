@@ -10,8 +10,7 @@ import {Product} from '../model/product-model';
 export class ProductsComponent implements OnInit {
   products = [];
   productsWithPrice = [];
-
-  productModel = new Product('1', '', '', '', '');
+  productModel = new Product(undefined, '', undefined, undefined, undefined, undefined);
 
   constructor(private productService: ProductService) {
   }
@@ -19,19 +18,29 @@ export class ProductsComponent implements OnInit {
   // tslint:disable-next-line:typedef
   ngOnInit() {
     this.productService.getAllProducts().subscribe((data: any[]) => {
-      console.log(data);
+      console.log('initializing all record from backend');
       this.products = data;
     });
+    setTimeout(() => {
+      if (this.products.length > 0) {
+        this.products.forEach((product, i) => {
+          if (i === 0) {
+            this.productModel.id = product.id;
+          }
+        });
+      }
+      this.calculateFiftyPrice();
+    }, 500);
   }
 
   // tslint:disable-next-line:typedef
-  calculateFiftyPrice(productModel) {
-    if (this.productModel.id !== '') {
+  calculateFiftyPrice() {
+    console.log('retrieving 50 records calculated values');
+    if (this.productModel.id !== undefined) {
       this.productService.calculateFiftyPrice(this.productModel.id).subscribe((data: any[]) => {
         console.log(data);
         this.productsWithPrice = data;
       });
     }
   }
-
 }

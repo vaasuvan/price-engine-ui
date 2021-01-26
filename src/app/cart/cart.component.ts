@@ -13,9 +13,9 @@ export class CartComponent implements OnInit {
   // tslint:disable-next-line:ban-types
   products: any[] = [];
   calculatedPrice: string;
-  Price; price = new Price('', '', '', '', '', '');
+  Price; price = new Price(undefined, '', undefined, undefined, undefined, undefined);
   pro = {};
-  productModel = new Product('', '', '', '', '');
+  productModel = new Product(undefined, '', undefined, undefined, undefined, undefined);
   carts;
   cartDetails;
   constructor(private productService: ProductService) {}
@@ -58,7 +58,7 @@ export class CartComponent implements OnInit {
   calculatePrice(productModel) {
     console.log('==========' + this.productModel.id);
     console.log('==========' + this.productModel.quantity);
-    if (this.productModel.id !== '' && this.productModel.quantity !== '') {
+    if (this.productModel.id !== undefined && this.productModel.quantity !== undefined) {
       this.productService.calculatePrice(this.productModel.id, this.productModel.quantity).subscribe((data: Price) => {
         console.log(data);
         this.price = data;

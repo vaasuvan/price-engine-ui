@@ -8,7 +8,8 @@
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
-        <form  #cartForm="ngForm" (change)="calculatePrice(productModel)">
+<!--        <form  #cartForm="ngForm" (change)="calculatePrice(productModel)">-->
+        <form >
         <table class="table table-striped">
           <thead>
           <tr>
@@ -21,15 +22,15 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let product of productCart">
+          <tr *ngFor="let product of productCart; let i = index">
             <td><img src="assets/images/{{product.productName}}.jpeg" class="img-responsive img-fluid" alt="" width="90px"/> </td>
             <td>{{product.productName}}</td>
             <td>In stock</td>
             <input type="text" [(ngModel)]="productModel.id" value="productModel.id" name="id" hidden>
 <!--            <td><input class="form-control" type="text" [(ngModel)]="productModel.quantity" required /></td>-->
-            <td><input type="number" class="form-control"  id="quantity" name="quantity" [(ngModel)]="productModel.quantity" min="0" required></td>
-            <td class="text-right">{{ price.ultimatePrice | currency: 'LKR  ':true }}</td>
-            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+            <td><input type="number" class="form-control"  id="quantity{{i}}" name="quantity" (keyup)="calculatePrice($event.target.value, product)" min="0" required></td>
+            <td class="text-right">{{ product.ultimatePrice | currency: 'LKR  ':true }}</td>
+            <td class="text-right"><button class="btn btn-sm btn-danger" (click)="removeCartItem(product)"><i class="fa fa-trash">Delete</i> </button> </td>
           </tr>
 
           <tr>
@@ -38,7 +39,7 @@
             <td></td>
             <td></td>
             <td>Sub-Total</td>
-            <td class="text-right">255,90 €</td>
+            <td class="text-right">{{subTotalPrice | currency: 'LKR  ':true}} LKR</td>
           </tr>
           <tr>
             <td></td>
@@ -46,7 +47,7 @@
             <td></td>
             <td></td>
             <td>Shipping</td>
-            <td class="text-right">6,90 €</td>
+            <td class="text-right">{{shipping | currency: 'LKR  ':true}} LKR</td>
           </tr>
           <tr>
             <td></td>
@@ -54,7 +55,7 @@
             <td></td>
             <td></td>
             <td><strong>Total</strong></td>
-            <td class="text-right"><strong>346,90 €</strong></td>
+            <td class="text-right"><strong>{{totalPrice | currency: 'LKR  ':true}} LKR</strong></td>
           </tr>
           </tbody>
         </table>
@@ -64,7 +65,7 @@
     <div class="col mb-2">
       <div class="row">
         <div class="col-sm-12  col-md-6">
-          <button class="btn btn-block btn-light" routerLink="product">Continue Shopping</button>
+          <button class="btn btn-block btn-light" [routerLink]="['/product']">Continue Shopping</button>
         </div>
         <div class="col-sm-12 col-md-6 text-right">
           <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>

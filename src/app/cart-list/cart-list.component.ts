@@ -11,8 +11,11 @@ import {Price} from '../model/price-model';
 export class CartListComponent implements OnInit {
 
   productCart: Array<Product> = [];
-  productModel = new Product('', '', '', '', '');
-  Price; price = new Price('', '', '', '', '', '');
+  subTotalPrice: number = 0;
+  totalPrice: number = 0;
+  shipping: number = 50;
+  productModel = new Product(undefined, '', undefined, undefined, undefined, undefined);
+  price = new Price(undefined, '', undefined, undefined, undefined, undefined);
   constructor(private productService: ProductService) { }
 
   get data(): Product[]{
@@ -21,6 +24,7 @@ export class CartListComponent implements OnInit {
   ngOnInit(): void {
     this.getCartProduct();
     this.productService.productCart.forEach(element => {
+      element.ultimatePrice = 0;
       console.log('Checking data injection between different component ' + element.productName);
     });
   }
@@ -30,16 +34,53 @@ export class CartListComponent implements OnInit {
       this.productCart = this.productService.productCart;
   }
 
-  // tslint:disable-next-line:typedef
-  calculatePrice(productModel) {
-    console.log('==========' + productModel.id);
-    console.log('==========' + productModel.quantity);
-    if (this.productModel.id !== '' && this.productModel.quantity !== '') {
-      this.productService.calculatePrice(this.productModel.id, this.productModel.quantity).subscribe((data: Price) => {
+  /*// tslint:disable-next-line:typedef
+  calculatePrice(value: number, product: Product) {
+    product.quantity = value;
+    console.log('===cart-list==calculate price=====' + product.id);
+    console.log('==========' + product.quantity);
+    if (product.id !== undefined && product.quantity !== undefined) {
+      this.productService.calculatePrice(product.id, product.quantity).subscribe((data: Price) => {
         console.log(data);
         this.price = data;
+        product.ultimatePrice = this.price.ultimatePrice;
+        this.totalPrice = this.totalPrice + this.price.ultimatePrice;
         console.log(this.price);
       });
     }
+  }
+*/
+
+  // tslint:disable-next-line:typedef
+  calculatePrice(value: string, product: Product) {
+    // tslint:disable-next-line:radix
+    product.quantity = value === '' ? 0 : parseInt(value);
+    if (product.id !== undefined && product.quantity !== undefined) {
+      this.productService.calculatePrice(product.id, product.quantity).subscribe((data: Price) => {
+        console.log(data);
+        this.price = data;
+        product.ultimatePrice = this.price.ultimatePrice;
+        this.calculateTotalPrice();
+        console.log(this.price);
+      });
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  calculateTotalPrice() {
+    this.subTotalPrice = 0;
+    if (this.productCart.length > 0) {
+      this.productCart.forEach(product => {
+        if (product.ultimatePrice !== undefined) {
+          this.subTotalPrice = this.subTotalPrice + product.ultimatePrice;
+          this.totalPrice = this.subTotalPrice + this.shipping;
+        }
+      });
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  removeCartItem(product){
+    this.productService.removeLocalCartProduct(product);
   }
 }

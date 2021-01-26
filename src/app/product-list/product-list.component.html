@@ -3,7 +3,6 @@
     <div class="col-md-12">
       <h2>Trending <b>Products</b></h2>
       <div class="carousel slide" data-ride="carousel" data-interval="0">
-        <!-- Wrapper for carousel items -->
         <div class="carousel-inner">
           <div class="item carousel-item active">
             <div class="row">
@@ -15,16 +14,13 @@
                   <div class="thumb-content">
                     <h4>{{product.productName}}</h4>
                     <p class="item-price"><span>Carton Price :</span> <span>LKR {{product.cartonPrice}}</span></p>
+                    <p class="star-rating"><span>Units in a Carton :</span> <span>{{product.numberOfUnitInCarton}}</span></p>
                     <a class="btn btn-primary" (click)="addToCart(product)">Add to Cart</a>
                   </div>
                 </div>
               </div>
-
-
-
             </div>
           </div>
-
         </div>
       </div>
     </div>

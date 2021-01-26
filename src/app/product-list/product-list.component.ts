@@ -11,23 +11,8 @@ import set = Reflect.set;
 export class ProductListComponent implements OnInit {
 
   products: any[] = [];
-  showDataNotFound = true;
-
-  // Not Found Message
-  messageTitle = 'No Products Found in Cart';
-  messageDescription = 'Please, Add Products to Cart';
 
   constructor(private productService: ProductService) {}
-
-  /*// @ts-ignore
-  get data(): Product[]{
-    return this.productService.productCart;
-  }
-
-  // @ts-ignore
-  set data(value: Product){
-    this.productService.productCart.push(value);
-  }*/
 
     // tslint:disable-next-line:typedef
   ngOnInit() {
@@ -53,8 +38,10 @@ export class ProductListComponent implements OnInit {
   // tslint:disable-next-line:typedef
   addToCart(product: Product) {
     console.log('adding product to cart');
-    // @ts-ignore
-    this.productService.productCart.push(product);
+    if (this.productService.productCart.indexOf(product) === -1) {
+      this.productService.productCart.push(product);
+    }
+    // this.productService.productCart.push(product);
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductService} from '../services/product.service';
 import {Product} from '../model/product-model';
 import {Price} from '../model/price-model';
@@ -16,11 +16,14 @@ export class CartListComponent implements OnInit {
   shipping: number = 50;
   productModel = new Product(undefined, '', undefined, undefined, undefined, undefined);
   price = new Price(undefined, '', undefined, undefined, undefined, undefined);
-  constructor(private productService: ProductService) { }
 
-  get data(): Product[]{
+  constructor(private productService: ProductService) {
+  }
+
+  get data(): Product[] {
     return this.productService.productCart;
   }
+
   ngOnInit(): void {
     this.getCartProduct();
     this.productService.productCart.forEach(element => {
@@ -30,26 +33,9 @@ export class CartListComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  getCartProduct(){
-      this.productCart = this.productService.productCart;
+  getCartProduct() {
+    this.productCart = this.productService.productCart;
   }
-
-  /*// tslint:disable-next-line:typedef
-  calculatePrice(value: number, product: Product) {
-    product.quantity = value;
-    console.log('===cart-list==calculate price=====' + product.id);
-    console.log('==========' + product.quantity);
-    if (product.id !== undefined && product.quantity !== undefined) {
-      this.productService.calculatePrice(product.id, product.quantity).subscribe((data: Price) => {
-        console.log(data);
-        this.price = data;
-        product.ultimatePrice = this.price.ultimatePrice;
-        this.totalPrice = this.totalPrice + this.price.ultimatePrice;
-        console.log(this.price);
-      });
-    }
-  }
-*/
 
   // tslint:disable-next-line:typedef
   calculatePrice(value: string, product: Product) {
@@ -80,7 +66,7 @@ export class CartListComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  removeCartItem(product){
+  removeCartItem(product) {
     this.productService.removeLocalCartProduct(product);
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Product} from '../model/product-model';
 import {ProductService} from '../services/product.service';
-import set = Reflect.set;
 
 @Component({
   selector: 'app-product-list',
@@ -38,10 +37,10 @@ export class ProductListComponent implements OnInit {
   // tslint:disable-next-line:typedef
   addToCart(product: Product) {
     console.log('adding product to cart');
-    if (this.productService.productCart.indexOf(product) === -1) {
-      this.productService.productCart.push(product);
-    }
-    // this.productService.productCart.push(product);
+    // if (this.productService.productCart.indexOf(product) === -1) {
+    //   this.productService.productCart.push(product);
+    // }
+    this.productService.addToCart(product);
   }
 
 }

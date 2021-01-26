@@ -10,7 +10,6 @@ import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ProductListComponent } from './product-list/product-list.component';
-import { ToastrModule } from 'ngx-toastr';
 import { CartListComponent } from './cart-list/cart-list.component';
 
 @NgModule({

@@ -9,25 +9,17 @@ import {ToasterService} from './toaster.service';
 })
 export class ProductService {
 
+  productCart: Array<Product> = [];
+
+  set cartItemsToProduct(product: Product){
+    this.productCart.push(product);
+  }
   constructor(private http: HttpClient, private toastrService: ToasterService) {}
   // tslint:disable-next-line:typedef
   getAllProducts() {
     return this.http.get(`${environment.baseURL}/products`);
   }
-  // tslint:disable-next-line:typedef
-  addToCart(data: Product) {
-    const a: Product[] = JSON.parse(localStorage.getItem('active_item')) || [];
-    console.log('localstorage data...' + data);
-    a.push(data);
-    console.log('pushed to local storage');    // this.toastrService.wait(
-    //   'Adding Product to Cart',
-    //   'Product Adding to the cart'
-    // );
-    setTimeout(() => {
-      localStorage.setItem('active_item', JSON.stringify(a));
-    }, 500);
-    // return this.http.post(`${environment.baseURL}/cart`, payload);
-  }
+
   // tslint:disable-next-line:typedef
   getCartItems() {
     return this.http.get(`${environment.baseURL}/cart`);
@@ -53,6 +45,22 @@ export class ProductService {
     return this.http.get(`${environment.baseURL}/price` + '/' + productId + '/' + quantity);
   }
 
+  // tslint:disable-next-line:typedef
+  addToCart(data: Product) {
+    // localStorage.setItem('active_item', JSON.stringify(data));
+    // const a: Product[] = JSON.parse(localStorage.getItem('active_item')) || [];
+    console.log('localstorage data...' + data);
+    this.productCart.push(data);
+    console.log('cart products' + data);
+    // this.toastrService.wait(
+    //   'Adding Product to Cart',
+    //   'Product Adding to the cart'
+    // );
+    // setTimeout(() => {
+    //   localStorage.setItem('active_item', JSON.stringify(a));
+    // }, 500);
+    // return this.http.post(`${environment.baseURL}/cart`, payload);
+  }
   // Removing cart from local
   // tslint:disable-next-line:typedef
   removeLocalCartProduct(product: Product) {
@@ -68,11 +76,11 @@ export class ProductService {
     localStorage.setItem('active_item', JSON.stringify(products));
   }
 
-  // Fetching Locat CartsProducts
-  getLocalCartProducts(): Product[] {
-    const products: Product[] =
-      JSON.parse(localStorage.getItem('active_item')) || [];
-    console.log(products);
-    return products;
-  }
+  // // Fetching Locat CartsProducts
+  // getLocalCartProducts(): Product[] {
+  //   const products: Product[] =
+  //     JSON.parse(localStorage.getItem('active_item')) || [];
+  //   console.log('get local cat items' + products);
+  //   return products;
+  // }
 }

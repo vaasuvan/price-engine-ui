@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Product} from '../model/product-model';
 import {ProductService} from '../services/product.service';
+import set = Reflect.set;
 
 @Component({
   selector: 'app-product-list',
@@ -18,7 +19,17 @@ export class ProductListComponent implements OnInit {
 
   constructor(private productService: ProductService) {}
 
-  // tslint:disable-next-line:typedef
+  // @ts-ignore
+  get data(): Product[]{
+    return this.productService.productCart;
+  }
+
+  // @ts-ignore
+  set data(value: Product){
+    this.productService.productCart.push(value);
+  }
+
+    // tslint:disable-next-line:typedef
   ngOnInit() {
     this.getAllProducts();
   }
@@ -41,7 +52,9 @@ export class ProductListComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   addToCart(product: Product) {
-    this.productService.addToCart(product);
+    console.log('adding product to cart');
+    // @ts-ignore
+    set(product);
   }
 
 }

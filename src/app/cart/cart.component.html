@@ -38,7 +38,7 @@
                     <i class="fa fa-minus"></i>
                   </button>
                 </div>
-                <input type="number" class="form-control"  id="quantity" name="quantity" [(ngModel)]="productModel.quantity" required>
+                <input type="number" class="form-control"  id="quantity" name="quantity" [(ngModel)]="productModel.quantity"  min="0" required>
                 <div class="input-group-append">
                   <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
                     <i class="fa fa-plus"></i>
